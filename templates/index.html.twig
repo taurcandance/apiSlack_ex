@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="../assets/css/style.css"/>
+        <title>{% block title %}{% endblock %} - My WebPage</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+<body>
+<div id="content">{% block content %}
+        <form action="/index.php" method="get" class="registration">
+            <span>MethodName</span><br/>
+            <input name="method" placeholder="channels.history" value="{{ methodName }}">
+            <input name="channel" placeholder="CG5ARMCEA" value="{{ channelName }}">
+            <input type="submit" name="" value="Show" class="registration-button"/>
+        </form>
+        {% if response[0] == true %}
+            <ul class="list-group">
+                {% for item in response %}
+                    {% if item.client_msg_id == false %}
+                        <li class="list-group-item">{{ i }}
+                            <strong id="item-type">{{ item.type }}</strong><br/>
+                            {% if item.username == true %}{{ item.username }}:<br/>{% endif %}
+                            {% if item.user == true %}{{ item.user }}:<br/>{% endif %}
+                            <b>{{ item.text }}</b><br/>
+                            {{ item.ts }}<br/>
+                            {{ item.reply_count }}
+                        </li>
+                        {% if item.replies %}
+                            {% for reply in item.replies %}
+                                <li class="list-group-item replies">
+                                    replyUser:
+                                    {% if reply.username == true %}{{ reply.username }}:<br/>{% endif %}
+                                    {% if reply.user == true %}{{ reply.user }}:<br/>{% endif %}
+                                    ts: {{ reply.ts }}<br/> replyMessage: <b>{{ comments[reply.ts].text }}</b>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}</div>
+{#<div id="footer">#}
+{#{% block footer %}#}
+{#&copy; Copyright 2011 by <a href="http://domain.invalid/">Link</a>.#}
+{#{% endblock %}#}
+{#</div>#}
+</body>
+</html>
